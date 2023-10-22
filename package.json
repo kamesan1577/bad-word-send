@@ -10,6 +10,9 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.4",
+    "@plasmohq/messaging": "^0.5.0",
+    "googleapis": "^128.0.0",
     "plasmo": "0.83.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -28,6 +31,17 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
-    ]
+    ],
+    "permissions": [
+      "contextMenus",
+      "identity",
+      "storage"
+    ],
+    "oauth2": {
+      "client_id": "276310661215-vfmv4mi18vpopa6hqgou7qcaufmach9k.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ]
+    }
   }
 }
