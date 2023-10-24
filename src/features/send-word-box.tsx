@@ -1,20 +1,30 @@
 import { Button } from "@material-tailwind/react/"
 import React, { useState } from "react"
 
+import { sendToBackground } from "@plasmohq/messaging"
 import { usePort } from "@plasmohq/messaging/hook"
 
-export const WordBox = () => {
+export const WordBox = (props) => {
   const mailPort = usePort("mail")
   const [data, setData] = useState({
-    見出し: "",
-    読み方: "",
-    言い換え語: "",
-    備考: ""
+    見出し: props.見出し || "",
+    読み方: props.読み方 || "",
+    言い換え語: props.言い換え語 || "",
+    備考: props.備考 || ""
   })
   const handleDataChange = (key: string, value: string) => {
     setData((prev) => ({ ...prev, [key]: value }))
   }
 
+  const handleSendToBackground = async () => {
+    const resp = await sendToBackground({
+      name: "data",
+      body: {
+        data: data
+      }
+    })
+    console.log(resp)
+  }
   const dataInput = (key: string) => {
     return (
       <div className=" relative h-10 m-2 w-full min-w-[200px]">
@@ -36,7 +46,7 @@ export const WordBox = () => {
   }
 
   return (
-    <div className="flex m-4 gap-4">
+    <div className="justify-center flex m-4 gap-4">
       <form>
         {Object.keys(data).map((key, index) => (
           <div className="flex justify-content-center" key={index}>
@@ -45,9 +55,7 @@ export const WordBox = () => {
         ))}
         <Button
           onClick={async () => {
-            mailPort.send({
-              data: data
-            })
+            await handleSendToBackground()
           }}
           className="mt-2">
           送信

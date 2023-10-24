@@ -3,7 +3,7 @@
 https://yomi-tan.jp/man/v1
 */
 
-export { }
+export { appendData }
 const sheetData: SheetData = {
     "見出し": "",
     "読み方": "",
@@ -98,8 +98,12 @@ chrome.contextMenus.onClicked.addListener(async (info) => {
     const selectedText = info.selectionText;
     const pronouncement = await getPronouncement(selectedText);
     const data = { ...sheetData, "見出し": selectedText, "読み方": pronouncement };
+
     appendData(data);
 
     console.log(selectedText);
-}
-);
+
+
+    // chrome.windows.create({ url: "popup.html", type: "popup", width: 400, height: 400 });
+
+});
